@@ -3,10 +3,12 @@ Descripttion:
 version: 
 Author: LiQiang
 Date: 2021-06-12 08:59:57
-LastEditTime: 2021-06-12 09:07:28
+LastEditTime: 2021-07-04 09:52:32
 '''
 # 导入所需工具包
-from model import SimpleVGGNet
+from keras import models
+from ResNet import ResNet50
+from Alexnet import AlexNet
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
@@ -60,12 +62,28 @@ aug = ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
     horizontal_flip=True, fill_mode="nearest")
 
 # 建立卷积神经网络
-model = SimpleVGGNet.build(width=64, height=64, depth=3,classes=len(lb.classes_))
+from CNN import CNN
+model = CNN.build(width=64, height=64, depth=3,classes=len(lb.classes_))
+
+# Alexnet
+# model=AlexNet.build(width=227, height=227, depth=3,classes=len(lb.classes_))
+# import ResNet
+# model=ResNet.ResNet50()
+
+
+# 使用Vgg 迁移学习
+# import transfer_learning_VGG
+# model=transfer_learning_VGG.vgg()
+
+
+# 使用ResNet50 迁移学习
+# import transfer_learning_ResNet50
+# model=transfer_learning_ResNet50.resnet()
 
 # 设置初始化超参数
-INIT_LR = 0.00125
-EPOCHS = 300
-BS = 32
+INIT_LR = 0.01
+EPOCHS = 50
+BS = 16
 
 # 损失函数，编译模型
 print("------准备训练网络------")
